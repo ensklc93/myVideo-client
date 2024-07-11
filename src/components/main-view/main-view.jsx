@@ -4,12 +4,13 @@ import { MovieView } from "../movie-view/movie-view.jsx";
 
 export const MainView = () => {
   const [movies, setMovies] = useState([]);
+  const [selectedMovie, setSelectedMovie] = useState(null);
+
 
   useEffect(() => {
     fetch("https://my-movie-app-ab91e4bb4611.herokuapp.com/movies")
       .then((response) => response.json())
       .then((data) => {
-        console.log("data check:", data)
         const moviesFromApi = data.map((movie) => {
           return {
             id: movie._id,
@@ -25,7 +26,6 @@ export const MainView = () => {
       });
   }, []);
 
-  const [selectedMovie, setSelectedMovie] = useState(null);
 
   if (selectedMovie) {
     return (
