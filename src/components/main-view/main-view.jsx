@@ -5,6 +5,7 @@ import { LoginView } from "../login-view/login.view.jsx"
 import { SignupView } from "../signup-view.jsx/signup-view.jsx"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
+import Button from 'react-bootstrap/Button';
 
 export const MainView = () => {
   const [movies, setMovies] = useState([])
@@ -40,6 +41,7 @@ export const MainView = () => {
   }, [token])
 
   return (
+    <>
     <Row className="justify-content-md-center">
       {!user ? (
           <Col md={5}>
@@ -64,7 +66,7 @@ export const MainView = () => {
       ) : (
         <>
           {movies.map(movie => (
-            <Col className="mb-5" key={movie.id} sm={2} md={5}>
+            <Col className="mb-5" key={movie.id} md={4} lg={3} sm={6} xs={12}>
             <MovieCard
               movie={movie}
               onMovieClick={newSelectedMovie => {
@@ -73,7 +75,13 @@ export const MainView = () => {
             />
             </Col>
           ))}
-          <button
+        </>
+      )}
+    </Row>
+    <Row>
+      <Button
+           variant="danger"
+           style={{width: "2w00px", display: "block", margin:"auto"}}
             onClick={() => {
               setUser(null)
               setToken(null)
@@ -81,9 +89,8 @@ export const MainView = () => {
             }}
           >
             Logout
-          </button>
-        </>
-      )}
+          </Button>
     </Row>
+    </>
   )
 }
