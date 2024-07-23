@@ -3,7 +3,7 @@ import { MovieCard } from "../movie-card/movie-card.jsx"
 import { MovieView } from "../movie-view/movie-view.jsx"
 import { LoginView } from "../login-view/login.view.jsx"
 import { SignupView } from "../signup-view.jsx/signup-view.jsx"
-import { NavigationBar } from "../navigation-bar/navigation-bar";
+import { NavigationBar } from "../navigation-bar/navigation-bar"
 import Row from "react-bootstrap/Row"
 import Col from "react-bootstrap/Col"
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
@@ -42,10 +42,12 @@ export const MainView = () => {
 
   return (
     <BrowserRouter>
-    <NavigationBar
+      <NavigationBar
         user={user}
         onLoggedOut={() => {
-          setUser(null);
+          setUser(null)
+          setToken(null)
+          localStorage.clear()
         }}
       />
       <Row className="justify-content-md-center">
@@ -93,9 +95,7 @@ export const MainView = () => {
                   <Col>The list is empty!</Col>
                 ) : (
                   <Col md={8}>
-                    <MovieView
-                      movies={movies}
-                    />
+                    <MovieView movies={movies} />
                   </Col>
                 )}
               </>
@@ -120,9 +120,7 @@ export const MainView = () => {
                         sm={6}
                         xs={12}
                       >
-                        <MovieCard
-                          movie={movie}
-                        />
+                        <MovieCard movie={movie} />
                       </Col>
                     ))}
                   </>
