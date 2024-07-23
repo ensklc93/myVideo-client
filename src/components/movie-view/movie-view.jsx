@@ -1,8 +1,12 @@
-import PropTypes from "prop-types"
-import Button from 'react-bootstrap/Button';
+import { useParams } from "react-router";
+import { Link } from "react-router-dom";
 
+export const MovieView = ({ movies }) => {
+  const { movieId } = useParams();
 
-export const MovieView = ({ movie, onBackClick }) => {
+  console.log(useParams());
+  const movie = movies.find((m) => m.id === movieId);
+
   return (
     <div>
       <div>
@@ -10,45 +14,31 @@ export const MovieView = ({ movie, onBackClick }) => {
       </div>
       <div>
         <span>Title: </span>
-        <span> {movie.title} </span>
+        <span>{movies.title} </span>
       </div>
       <div>
         <span>Description: </span>
-        <span>{movie.description}</span>
+        <span>{movies.description}</span>
       </div>
       <div>
         <span>Director: </span>
-        <span>{movie.directorName}</span>
+        <span>{movies.directorName}</span>
       </div>
       <div>
         <span>Director Bio: </span>
-        <span>{movie.directorBio}</span>
+        <span>{movies.directorBio}</span>
       </div>
       <div>
         <span>Genre: </span>
-        <span>{movie.genreName}</span>
+        <span>{movies.genreName}</span>
       </div>
       <div>
         <span>Genre Description: </span>
-        <span>{movie.genreDescription}</span>
+        <span>{movies.genreDescription}</span>
       </div>
-      <div>
-        <Button variant="outline-warning" onClick={onBackClick}>Back</Button>
-      </div>
+      <Link to={`/`}>
+        <button className="back-button">Back</button>
+      </Link>
     </div>
   )
-}
-
-
-MovieView.propTypes = {
-  movie: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    directorName: PropTypes.string.isRequired,
-    genreName: PropTypes.string.isRequired,
-    genreDescription: PropTypes.string.isRequired,
-    directorBio: PropTypes.string.isRequired
-  }).isRequired,
-  onMovieClick: PropTypes.func.isRequired
 }
