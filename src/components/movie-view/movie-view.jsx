@@ -1,11 +1,18 @@
-import { useParams } from "react-router";
+import React from "react";
+import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 export const MovieView = ({ movies }) => {
-  const { movieId } = useParams();
+  let { movieId } = useParams();
 
-  console.log(useParams());
+
   const movie = movies.find((m) => m.id === movieId);
+
+
+
+  if (!movie) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>
@@ -14,27 +21,27 @@ export const MovieView = ({ movies }) => {
       </div>
       <div>
         <span>Title: </span>
-        <span>{movies.title} </span>
+        <span>{movie.title} </span>
       </div>
       <div>
         <span>Description: </span>
-        <span>{movies.description}</span>
+        <span>{movie.description}</span>
       </div>
       <div>
         <span>Director: </span>
-        <span>{movies.directorName}</span>
+        <span>{movie.directorName}</span>
       </div>
       <div>
         <span>Director Bio: </span>
-        <span>{movies.directorBio}</span>
+        <span>{movie.directorBio}</span>
       </div>
       <div>
         <span>Genre: </span>
-        <span>{movies.genreName}</span>
+        <span>{movie.genreName}</span>
       </div>
       <div>
         <span>Genre Description: </span>
-        <span>{movies.genreDescription}</span>
+        <span>{movie.genreDescription}</span>
       </div>
       <Link to={`/`}>
         <button className="back-button">Back</button>
