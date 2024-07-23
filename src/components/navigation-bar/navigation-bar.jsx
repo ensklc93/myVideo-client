@@ -12,7 +12,6 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             {!user && (
-            
               <>
                 <Nav.Link as={Link} to="/login">
                   Login
