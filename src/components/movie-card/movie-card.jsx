@@ -28,7 +28,6 @@ MovieCard.propTypes = {
     genreName: PropTypes.string.isRequired,
     genreDescription: PropTypes.string.isRequired,
     directorBio: PropTypes.string.isRequired
-  }).isRequired,
-  onMovieClick: PropTypes.func.isRequired
+  }).isRequired
 }
 
