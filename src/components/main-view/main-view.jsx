@@ -52,7 +52,6 @@ export const MainView = () => {
           birthday: user.Birthday,
           favorites: user.FavoriteMovies,
         }));
-        console.log(usersFromApi)
         // Ensure the logged-in user is set correctly
         const loggedInUser = usersFromApi.find(u => u.username === storedUser.Username);
         if (loggedInUser) {
@@ -62,9 +61,14 @@ export const MainView = () => {
   }, [token, storedUser]);
 
   const handleLogout = () => {
-    setUser(null);
-    setToken(null);
-    localStorage.clear();
+    try {
+      setUser(null);
+      localStorage.removeItem('user');
+      localStorage.removeItem('token');
+      window.location.href = '/login'; // Redirect to login page
+    } catch (error) {
+      console.error('Error during logout:', error);
+    }
   };
 
   return (
