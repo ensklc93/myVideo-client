@@ -36,6 +36,7 @@ export const MainView = () => {
         setMovies(moviesFromApi);
       });
   }, [token]);
+ 
 
   useEffect(() => {
     if (!token) return;
@@ -69,6 +70,19 @@ export const MainView = () => {
     } catch (error) {
       console.error('Error during logout:', error);
     }
+  };
+
+  // Ensure user and user.FavoriteMovies are defined before filtering
+  const favoriteMovies = user && user.favorites ? movies.filter(m => user.favorites.includes(m.id)) : [];
+
+  const handleFavoritesUpdate = (updatedFavorites) => {
+    // Update the state or perform any other necessary actions with the updated favorites
+    console.log("Updated favorites:", updatedFavorites);
+    // Assuming you have a state to hold the user's favorite movies
+    setUser((prevUser) => ({
+      ...prevUser,
+      FavoriteMovies: updatedFavorites,
+    }));
   };
 
   return (
@@ -129,8 +143,34 @@ export const MainView = () => {
                 <Navigate to="/login" replace />
               ) : (
                 <Col md={8}>
-                  <ProfileView users={[user]} />
+                  <ProfileView
+                  users={[user]}
+                  token={token}
+                  favoriteMovies={favoriteMovies}/>
                 </Col>
+              )
+            }
+          />
+          <Route
+            path="/users/:username/movies/:movieID"
+            element={
+              !user ? (
+                <Navigate to="/" replace />
+              ) : movies.length === 0 ? (
+                <Col>The list is empty!</Col>
+              ) : (
+                <>
+                  {movies.map(movie => (
+                    <Col className="mb-5" key={movie.id} md={4} lg={3} sm={6} xs={12}>
+                      <MovieCard 
+                      users={user}
+                      movie={movie}
+                      token={token}
+                      onFavoritesUpdate={handleFavoritesUpdate}
+                      />
+                    </Col>
+                  ))}
+                </>
               )
             }
           />
@@ -145,7 +185,12 @@ export const MainView = () => {
                 <>
                   {movies.map(movie => (
                     <Col className="mb-5" key={movie.id} md={4} lg={3} sm={6} xs={12}>
-                      <MovieCard movie={movie} />
+                      <MovieCard 
+                      users={user}
+                      movie={movie}
+                      token={token}
+                      onFavoritesUpdate={handleFavoritesUpdate}
+                      />
                     </Col>
                   ))}
                 </>
