@@ -114,7 +114,6 @@ export const ProfileView = ({ users, token, favoriteMovies }) => {
   };
 
   const onFavoritesUpdate = (updatedFavorites) => {
-    
   };
 
   return (
@@ -165,7 +164,7 @@ export const ProfileView = ({ users, token, favoriteMovies }) => {
         {favoriteMovies.length === 0 ? (
           <p>No favorite movies added yet.</p>
         ) : (
-          <div className="d-flex flex-wrap">
+          <div className="d-flex flex-wrap" style={{width: "300px"}}>
             {favoriteMovies.map(movie => (
               <MovieCard
                 key={movie.id}
