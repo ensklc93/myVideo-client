@@ -1,14 +1,20 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useParams } from "react-router-dom";
+import { MovieCard } from "../movie-card/movie-card";
+import PropTypes from "prop-types"
+
+
 
 export const ProfileView = ({ users, token, favoriteMovies }) => {
+
   const { userName } = useParams();
   const user = users.find(u => u.username === userName);
   const [updatedUsername, setUpdatedUsername] = useState(user ? user.username : "");
   const [updatedPassword, setUpdatedPassword] = useState("");
   const [updatedEmail, setUpdatedEmail] = useState(user ? user.email : "");
   const [updatedBirthday, setUpdatedBirthday] = useState(user ? user.birthday : "");
+
 
   if (!user) {
     return <div>User not found</div>;
@@ -30,8 +36,6 @@ export const ProfileView = ({ users, token, favoriteMovies }) => {
       Email: updatedEmail,
       Birthday: updatedBirthday,
     };
-
-    console.log("Updated User Data:", updatedUserData);
 
     // Make a PUT request to the server to update the user's information
     fetch(
@@ -109,6 +113,10 @@ export const ProfileView = ({ users, token, favoriteMovies }) => {
       });
   };
 
+  const onFavoritesUpdate = (updatedFavorites) => {
+    
+  };
+
   return (
     <div>
       <h1>{user.username}'s Profile</h1>
@@ -157,13 +165,32 @@ export const ProfileView = ({ users, token, favoriteMovies }) => {
         {favoriteMovies.length === 0 ? (
           <p>No favorite movies added yet.</p>
         ) : (
-          <ul>
+          <div className="d-flex flex-wrap">
             {favoriteMovies.map(movie => (
-              <li key={movie.id}>{movie.title}</li>
+              <MovieCard
+                key={movie.id}
+                users={user}
+                movie={movie}
+                token={token}
+                onFavoritesUpdate={onFavoritesUpdate}
+              />
             ))}
-          </ul>
+          </div>
         )}
       </div>
     </div>
   );
 };
+
+
+ProfileView.propTypes = {
+  users: PropTypes.shape({
+    username: PropTypes.string.isRequired,
+    favorites: PropTypes.arrayOf(PropTypes.string).isRequired,
+    birthday: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.instanceOf(Date)]).isRequired,
+    password: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired
+  }).isRequired,
+  token: PropTypes.string.isRequired,
+  favoriteMovies: PropTypes.arrayOf(PropTypes.object).isRequired
+}
