@@ -1,4 +1,4 @@
-import { useState } from "react"
+import React, { useState } from "react";
 import Button from "react-bootstrap/Button"
 import Form from "react-bootstrap/Form"
 
@@ -27,7 +27,7 @@ export const SignupView = () => {
     }).then(response => {
       if (response.ok) {
         alert("Signup successful")
-        window.location.reload()
+        window.location.href = `/`
       } else {
         alert("Signup failed")
       }

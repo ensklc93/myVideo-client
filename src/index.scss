@@ -1,5 +1,14 @@
 $color: steelblue;
 
 .my-flix {
-  color: $color;
+}
+
+.movie-card--container{
+  display: grid;
+  align-content: space-between;
+  gap: 24px;
+}
+
+.card--image{
+  height: 500px;
 }
