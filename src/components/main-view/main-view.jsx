@@ -42,31 +42,30 @@ export const MainView = () => {
   useEffect(() => {
     if (!token) return;
 
-    fetch("https://my-movie-app-ab91e4bb4611.herokuapp.com/users", {
+    fetch(`https://my-movie-app-ab91e4bb4611.herokuapp.com/users`, {
       headers: { Authorization: `Bearer ${token}` },
     })
-      .then(response => response.json())
-      .then(data => {
-        const usersFromApi = data.map(user => ({
-          username: user.Username,
-          password: user.Password,
-          email: user.Email,
-          birthday: user.Birthday,
-          favorites: user.FavoriteMovies,
-        }));
-        // Ensure the logged-in user is set correctly
-        const loggedInUser = usersFromApi.find(u => u.username === storedUser.Username);
-        if (loggedInUser) {
-          setUser(loggedInUser);
-        }
-      });
-  }, [token, storedUser]);
+    .then(response => response.json())
+    .then(data => {
+      const usersFromApi = data.map(user => ({
+        username: user.Username,
+        password: user.Password,
+        email: user.Email,
+        birthday: user.Birthday,
+        favorites: user.FavoriteMovies,
+      }));
+      // Ensure the logged-in user is set correctly
+      const loggedInUser = usersFromApi.find(u => u.username === storedUser.Username);
+      if (loggedInUser) {
+        setUser(loggedInUser);
+      }
+    });
+}, [token]);
 
   const handleLogout = () => {
     try {
       setUser(null);
-      localStorage.removeItem('user');
-      localStorage.removeItem('token');
+      localStorage.clear();
       window.location.href = '/login'; // Redirect to login page
     } catch (error) {
       console.error('Error during logout:', error);
@@ -78,8 +77,6 @@ export const MainView = () => {
 
   const handleFavoritesUpdate = (updatedFavorites) => {
     // Update the state or perform any other necessary actions with the updated favorites
-    console.log("Updated favorites:", updatedFavorites);
-    // Assuming you have a state to hold the user's favorite movies
     setUser((prevUser) => ({
       ...prevUser,
       FavoriteMovies: updatedFavorites,
