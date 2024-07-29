@@ -1,7 +1,10 @@
 import { Navbar, Container, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types"
+
 
 export const NavigationBar = ({ user, onLoggedOut }) => {
+
   return (
     <Navbar bg="light" expand="lg">
       <Container>
@@ -37,4 +40,15 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
       </Container>
     </Navbar>
   );
+};
+
+NavigationBar.propTypes = {
+  user: PropTypes.shape({
+    username: PropTypes.string.isRequired,
+    favorites: PropTypes.arrayOf(PropTypes.string).isRequired,
+    birthday: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.instanceOf(Date)]).isRequired,
+    password: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired
+  }).isRequired,
+  onLoggedOut: PropTypes.func.isRequired
 };
