@@ -6,13 +6,8 @@ import { Link } from "react-router-dom"
 export const MovieCard = ({ users, movie, token, onFavoritesUpdate }) => {
   const [favorites, setFavorites] = useState(users.favorites || [])
 
-  useEffect(() => {
-    setFavorites(users.favorites || [])
-  }, [users.favorites])
-
   const handleAddToFavorites = async event => {
     event.preventDefault()
-    console.log("Add to Favorites button clicked")
 
     // Check if the movie is already in the favorite list before making the fetch request
     if (favorites.some(fav => fav === movie.id)) {
@@ -35,9 +30,7 @@ export const MovieCard = ({ users, movie, token, onFavoritesUpdate }) => {
       if (!response.ok) {
         throw new Error("Failed to add movie to favorites")
       }
-
       const data = await response.json()
-      console.log("Server response:", data)
 
       // Check if the server response contains the updated favorite movies list
       if (data.FavoriteMovies) {
@@ -56,7 +49,6 @@ export const MovieCard = ({ users, movie, token, onFavoritesUpdate }) => {
   const handleDeleteFromFavorites = async event => {
     event.preventDefault()
     event.stopPropagation() // Prevent event bubbling
-    console.log("Delete from Favorites button clicked")
 
     // Check if the movie is in the favorite list before making the fetch request
     if (!favorites.some(fav => fav === movie.id)) {
@@ -79,9 +71,7 @@ export const MovieCard = ({ users, movie, token, onFavoritesUpdate }) => {
       if (!response.ok) {
         throw new Error("Failed to delete movie from favorites")
       }
-
       const data = await response.json()
-      console.log("Server response:", data)
 
       // Check if the server response contains the updated favorite movies list
       if (data.FavoriteMovies) {
@@ -99,7 +89,7 @@ export const MovieCard = ({ users, movie, token, onFavoritesUpdate }) => {
 
   return (
     <Card className="h-100">
-      <Card.Img variant="top" src={movie.image} />
+      <Card.Img variant="top" src={movie.image} className="card--image" />
       <Card.Body className="movie-card--container">
         <div className="movie-card--content">
           <Card.Title>{movie.title}</Card.Title>
@@ -109,12 +99,16 @@ export const MovieCard = ({ users, movie, token, onFavoritesUpdate }) => {
           </Link>
         </div>
         <div className="add-delete--button">
-          <Button variant="primary" onClick={handleAddToFavorites}>
-            Add to Favorites
-          </Button>
-          <Button variant="danger" onClick={handleDeleteFromFavorites}>
-            Remove from Favorites
-          </Button>
+          {!favorites.some(fav => fav === movie.id) && (
+            <Button variant="primary" onClick={handleAddToFavorites}>
+              Add to Favorites
+            </Button>
+          )}
+          {favorites.some(fav => fav === movie.id) && (
+            <Button variant="danger" onClick={handleDeleteFromFavorites}>
+              Remove from Favorites
+            </Button>
+          )}
         </div>
       </Card.Body>
     </Card>
@@ -130,5 +124,15 @@ MovieCard.propTypes = {
     genreName: PropTypes.string.isRequired,
     genreDescription: PropTypes.string.isRequired,
     directorBio: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
   }).isRequired,
+  users: PropTypes.shape({
+    username: PropTypes.string.isRequired,
+    favorites: PropTypes.arrayOf(PropTypes.string).isRequired,
+    birthday: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.instanceOf(Date)]).isRequired,
+    password: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired
+  }).isRequired,
+  token: PropTypes.string.isRequired,
+  onFavoritesUpdate: PropTypes.func.isRequired,
 }
