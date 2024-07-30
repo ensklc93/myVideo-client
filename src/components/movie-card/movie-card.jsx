@@ -36,7 +36,6 @@ export const MovieCard = ({ users, movie, token, onFavoritesUpdate }) => {
       if (data.FavoriteMovies) {
         setFavorites(data.FavoriteMovies)
         onFavoritesUpdate(data.FavoriteMovies) // Notify parent component
-        alert("Movie added to favorites")
       } else {
         alert("Unexpected server response. Please try again later.")
       }
@@ -77,7 +76,6 @@ export const MovieCard = ({ users, movie, token, onFavoritesUpdate }) => {
       if (data.FavoriteMovies) {
         setFavorites(data.FavoriteMovies)
         onFavoritesUpdate(data.FavoriteMovies) // Notify parent component
-        alert("Movie deleted from favorites")
       } else {
         alert("Unexpected server response. Please try again later.")
       }
@@ -88,30 +86,32 @@ export const MovieCard = ({ users, movie, token, onFavoritesUpdate }) => {
   }
 
   return (
-    <Card className="h-100">
-      <Card.Img variant="top" src={movie.image} className="card--image" />
-      <Card.Body className="movie-card--container">
-        <div className="movie-card--content">
-          <Card.Title>{movie.title}</Card.Title>
-          <Card.Text>{movie.description}</Card.Text>
-          <Link to={`/movies/${encodeURIComponent(movie.id)}`}>
-            <Button variant="warning">Open</Button>
-          </Link>
-        </div>
-        <div className="add-delete--button">
-          {!favorites.some(fav => fav === movie.id) && (
-            <Button variant="primary" onClick={handleAddToFavorites}>
-              Add to Favorites
-            </Button>
-          )}
-          {favorites.some(fav => fav === movie.id) && (
-            <Button variant="danger" onClick={handleDeleteFromFavorites}>
-              Remove from Favorites
-            </Button>
-          )}
-        </div>
-      </Card.Body>
-    </Card>
+    <div className="movie--card">
+      <Card className="h-100">
+        <Card.Img variant="top" src={movie.image} className="card--image" />
+        <Card.Body className="movie-card--container">
+          <div className="movie-card--content">
+            <Card.Title>{movie.title}</Card.Title>
+            <Card.Text>{movie.description}</Card.Text>
+            <Link to={`/movies/${encodeURIComponent(movie.id)}`}>
+              <Button variant="warning">Open</Button>
+            </Link>
+          </div>
+          <div className="add-delete--button">
+            {!favorites.some(fav => fav === movie.id) && (
+              <Button variant="primary" onClick={handleAddToFavorites}>
+                Add to Favorites
+              </Button>
+            )}
+            {favorites.some(fav => fav === movie.id) && (
+              <Button variant="danger" onClick={handleDeleteFromFavorites}>
+                Remove from Favorites
+              </Button>
+            )}
+          </div>
+        </Card.Body>
+      </Card>
+    </div>
   )
 }
 
@@ -129,9 +129,13 @@ MovieCard.propTypes = {
   users: PropTypes.shape({
     username: PropTypes.string.isRequired,
     favorites: PropTypes.arrayOf(PropTypes.string).isRequired,
-    birthday: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.instanceOf(Date)]).isRequired,
+    birthday: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+      PropTypes.instanceOf(Date),
+    ]).isRequired,
     password: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired
+    email: PropTypes.string.isRequired,
   }).isRequired,
   token: PropTypes.string.isRequired,
   onFavoritesUpdate: PropTypes.func.isRequired,
