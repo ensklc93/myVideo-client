@@ -1,14 +1,68 @@
-$color: steelblue;
-
-.my-flix {
+body {
+  font-family: Outfit, "Times New Roman", Times, serif;
 }
 
-.movie-card--container{
+$color: steelblue;
+
+.movie-card--container {
   display: grid;
   align-content: space-between;
   gap: 24px;
 }
 
-.card--image{
+.card--image {
   height: 500px;
+}
+.profile--favorites {
+  gap: 20px;
+}
+
+.header--favorite-movies {
+  margin-block: 60px;
+  text-align: center;
+  font-size: 60px;
+  font-weight: bold;
+}
+
+form > .btn-danger {
+  margin-left: auto;
+  float: right;
+}
+
+.profile--container {
+  padding: 16px;
+  margin-top: 7rem;
+  -webkit-box-shadow: 5px 5px 15px 5px #ff8080, -9px 5px 15px 5px #ffe488,
+    -7px -5px 15px 5px #8cff85, 12px -5px 15px 5px #80c7ff,
+    12px 10px 15px 7px #e488ff, -10px 10px 15px 7px #ff616b,
+    -10px -7px 27px 1px #8e5cff, 5px 5px 15px 5px rgba(0, 0, 0, 0);
+  box-shadow: 5px 5px 15px 5px #ff8080, -9px 5px 15px 5px #ffe488,
+    -7px -5px 15px 5px #8cff85, 12px -5px 15px 5px #80c7ff,
+    12px 10px 15px 7px #e488ff, -10px 10px 15px 7px #ff616b,
+    -10px -7px 27px 1px #8e5cff, 5px 5px 15px 5px rgba(0, 0, 0, 0);
+}
+
+.profile--container > h1 {
+  text-align: center;
+}
+
+.navbar-expand-lg {
+  background-color: #e0ffff;
+  font-size: larger;
+  font-weight: bolder;
+  box-shadow: 0px 0px 2px 0px #000000;
+}
+
+.btn-primary {
+  background-color: #e0ffff;
+  color: black;
+  border-color: #e0ffff;
+}
+
+.card {
+  margin-top: 100px;
+}
+
+.col-md-5{
+  margin-top: 100px;
 }
