@@ -6,9 +6,9 @@ import PropTypes from "prop-types"
 export const NavigationBar = ({ user, onLoggedOut }) => {
 
   return (
-    <Navbar bg="light" expand="lg">
+    <Navbar expand="lg" fixed="top">
       <Container>
-        <Navbar.Brand as={Link} to="/">
+        <Navbar.Brand as={Link} to="/" >
           Movie App
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
