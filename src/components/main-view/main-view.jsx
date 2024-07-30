@@ -75,14 +75,20 @@ export const MainView = () => {
   // Ensure user and user.FavoriteMovies are defined before filtering
   const favoriteMovies = user && user.favorites ? movies.filter(m => user.favorites.includes(m.id)) : [];
 
+
   const handleFavoritesUpdate = (updatedFavorites) => {
     // Update the state or perform any other necessary actions with the updated favorites
     setUser((prevUser) => ({
       ...prevUser,
-      FavoriteMovies: updatedFavorites,
+      favorites: updatedFavorites,
+    }));
+
+    localStorage.setItem("user", JSON.stringify({
+      ...user,
+      favorites: updatedFavorites
     }));
   };
-
+  
   return (
     <BrowserRouter>
       <NavigationBar
@@ -140,11 +146,13 @@ export const MainView = () => {
               !user ? (
                 <Navigate to="/login" replace />
               ) : (
-                <Col md={8}>
+                <Col md={10}>
                   <ProfileView
                   users={[user]}
                   token={token}
-                  favoriteMovies={favoriteMovies}/>
+                  favoriteMovies={favoriteMovies}
+                  onFavoritesUpdate={handleFavoritesUpdate}
+                />
                 </Col>
               )
             }
