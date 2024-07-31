@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react"
+import { useState } from "react"
 import PropTypes from "prop-types"
-import { Button, Card } from "react-bootstrap"
+import { Button, Card} from "react-bootstrap"
 import { Link } from "react-router-dom"
 
 export const MovieCard = ({ users, movie, token, onFavoritesUpdate }) => {
@@ -86,7 +86,7 @@ export const MovieCard = ({ users, movie, token, onFavoritesUpdate }) => {
   }
 
   return (
-    <div className="movie--card">
+    <div>
       <Card className="h-100">
         <Card.Img variant="top" src={movie.image} className="card--image" />
         <Card.Body className="movie-card--container">
