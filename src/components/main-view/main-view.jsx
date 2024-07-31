@@ -124,7 +124,6 @@ export const MainView = () => {
     <BrowserRouter>
       <NavigationBar user={user} onLoggedOut={handleLogout} />
       <Row className="justify-content-md-center">
-      <FilterView genres={genres} directors={directors} onFilterChange={handleFilterChange} />
         <Routes>
           <Route
             path="/login"
@@ -225,6 +224,7 @@ export const MainView = () => {
                 <Col>The list is empty!</Col>
               ) : (
                 <>
+                  <FilterView genres={genres} directors={directors} onFilterChange={handleFilterChange} />
                   {filteredMovies.map(movie => (
                     <Col
                       className="mb-5"
