@@ -66,3 +66,12 @@ form > .btn-danger {
 .col-md-5{
   margin-top: 100px;
 }
+
+.filter--container{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 65px;
+  margin-bottom: -15px;
+}
