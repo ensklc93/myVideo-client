@@ -1,4 +1,4 @@
-# myMovie
+# myVideoApp
 
 This project was initailly created to present my newly learned progamming skills. 
 
@@ -9,4 +9,4 @@ existing server-side code (REST API and database).
 
 ## Project Dependencies
 
-In this project React and SASS is mainly used.  
+In this project React and Bootstrap is mainly used.  
