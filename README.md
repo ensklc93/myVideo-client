@@ -1,4 +1,4 @@
-# myVideoApp
+# MyVideo App
 
 This project was initailly created to present my newly learned progamming skills. 
 
