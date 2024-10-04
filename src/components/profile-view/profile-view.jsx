@@ -1,18 +1,14 @@
 import React, { useState } from "react"
 import { Form, Button, Row, Col } from "react-bootstrap"
-import { useParams } from "react-router-dom"
 import { MovieCard } from "../movie-card/movie-card"
 import PropTypes from "prop-types"
 
-export const ProfileView = ({ users, token, favoriteMovies, onFavoritesUpdate }) => {
-  const { userName } = useParams()
+export const ProfileView = ({ user, token, favoriteMovies, onFavoritesUpdate }) => {
 
-  const user = users.find(u => u.username === userName)
-
-  const [updatedUsername, setUpdatedUsername] = useState(user ? user.username : "")
+  const [updatedUsername, setUpdatedUsername] = useState(user ? user.Username : "")
   const [updatedPassword, setUpdatedPassword] = useState("")
-  const [updatedEmail, setUpdatedEmail] = useState(user ? user.email : "")
-  const [updatedBirthday, setUpdatedBirthday] = useState(user ? user.birthday : "")
+  const [updatedEmail, setUpdatedEmail] = useState(user ? user.Email : "")
+  const [updatedBirthday, setUpdatedBirthday] = useState(user ? user.Birthday : "")
 
   if (!user) {
     return <div>User not found</div>
@@ -37,7 +33,7 @@ export const ProfileView = ({ users, token, favoriteMovies, onFavoritesUpdate })
 
     // Make a PUT request to the server to update the user's information
     fetch(
-      `https://my-movie-app-ab91e4bb4611.herokuapp.com/users/${user.username}`,
+      `https://my-movie-app-ab91e4bb4611.herokuapp.com/users/${user.Username}`,
       {
         method: "PUT",
         headers: {
@@ -86,7 +82,7 @@ export const ProfileView = ({ users, token, favoriteMovies, onFavoritesUpdate })
     }
 
     fetch(
-      `https://my-movie-app-ab91e4bb4611.herokuapp.com/users/${user.username}`,
+      `https://my-movie-app-ab91e4bb4611.herokuapp.com/users/${user.Username}`,
       {
         method: "DELETE",
         headers: {
@@ -110,11 +106,11 @@ export const ProfileView = ({ users, token, favoriteMovies, onFavoritesUpdate })
         alert("Error deleting account. Please try again later.")
       })
   }
-
+  
   return (
     <>
       <div className="profile--container">
-        <h1>{user.username}'s Profile</h1>
+        <h1>{user.Username}'s Profile</h1>
         <Form onSubmit={handleSubmit}>
           <Row className="mb-3">
             <Form.Group as={Col} controlId="formUsername">
@@ -176,7 +172,7 @@ export const ProfileView = ({ users, token, favoriteMovies, onFavoritesUpdate })
             {favoriteMovies.map(movie => (
               <MovieCard
                 key={movie.id}
-                users={user}
+                user={user}
                 movie={movie}
                 token={token}
                 onFavoritesUpdate={onFavoritesUpdate}
@@ -190,16 +186,16 @@ export const ProfileView = ({ users, token, favoriteMovies, onFavoritesUpdate })
 }
 
 ProfileView.propTypes = {
-  users: PropTypes.shape({
-    username: PropTypes.string.isRequired,
-    favorites: PropTypes.arrayOf(PropTypes.string).isRequired,
-    birthday: PropTypes.oneOfType([
+  user: PropTypes.shape({
+    Username: PropTypes.string.isRequired,
+    FavoriteMovies: PropTypes.arrayOf(PropTypes.string).isRequired,
+    Birthday: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number,
       PropTypes.instanceOf(Date),
     ]).isRequired,
-    password: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
+    Password: PropTypes.string.isRequired,
+    Email: PropTypes.string.isRequired,
   }).isRequired,
   token: PropTypes.string.isRequired,
   favoriteMovies: PropTypes.arrayOf(PropTypes.object).isRequired,

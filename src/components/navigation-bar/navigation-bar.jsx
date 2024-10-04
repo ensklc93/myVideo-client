@@ -2,7 +2,6 @@ import { Navbar, Container, Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types"
 
-
 export const NavigationBar = ({ user, onLoggedOut }) => {
 
   return (
@@ -29,7 +28,7 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
                 <Nav.Link as={Link} to="/">
                   Home
                 </Nav.Link>
-                <Nav.Link as={Link} to={`/users/${user.username}`}>
+                <Nav.Link as={Link} to={`/users/${user.Username}`}>
                   Profile
                 </Nav.Link>
                 <Nav.Link onClick={onLoggedOut}>Logout</Nav.Link>
@@ -44,11 +43,11 @@ export const NavigationBar = ({ user, onLoggedOut }) => {
 
 NavigationBar.propTypes = {
   user: PropTypes.shape({
-    username: PropTypes.string.isRequired,
-    favorites: PropTypes.arrayOf(PropTypes.string).isRequired,
-    birthday: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.instanceOf(Date)]).isRequired,
-    password: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired
+    Username: PropTypes.string.isRequired,
+    FavoriteMovies: PropTypes.arrayOf(PropTypes.string).isRequired,
+    Birthday: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.instanceOf(Date)]).isRequired,
+    Password: PropTypes.string.isRequired,
+    Email: PropTypes.string.isRequired
   }).isRequired,
   onLoggedOut: PropTypes.func.isRequired
 };
