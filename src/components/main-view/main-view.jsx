@@ -55,26 +55,11 @@ export const MainView = () => {
   useEffect(() => {
     if (!token) return
 
-    fetch(`https://my-movie-app-ab91e4bb4611.herokuapp.com/users`, {
+    fetch(`https://my-movie-app-ab91e4bb4611.herokuapp.com/users/${user.Username}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then(response => response.json())
-      .then(data => {
-        const usersFromApi = data.map(user => ({
-          username: user.Username,
-          password: user.Password,
-          email: user.Email,
-          birthday: user.Birthday,
-          favorites: user.FavoriteMovies,
-        }))
-        // Ensure the logged-in user is set correctly
-        const loggedInUser = usersFromApi.find(
-          u => u.username === storedUser.Username
-        )
-        if (loggedInUser) {
-          setUser(loggedInUser)
-        }
-      })
+      .then(data => setUser(data))
   }, [token])
 
   const handleLogout = () => {
@@ -89,22 +74,22 @@ export const MainView = () => {
 
   // Ensure user and user.FavoriteMovies are defined before filtering
   const favoriteMovies =
-    user && user.favorites
-      ? movies.filter(m => user.favorites.includes(m.id))
+    user && user.FavoriteMovies
+      ? movies.filter(m => user.FavoriteMovies.includes(m.id))
       : []
 
   const handleFavoritesUpdate = updatedFavorites => {
-    // Update the state or perform any other necessary actions with the updated favorites
+    // Update the state or perform any other necessary actions with the updated FavoriteMovies
     setUser(prevUser => ({
       ...prevUser,
-      favorites: updatedFavorites,
+      FavoriteMovies: updatedFavorites,
     }))
 
     localStorage.setItem(
       "user",
       JSON.stringify({
         ...user,
-        favorites: updatedFavorites,
+        FavoriteMovies: updatedFavorites,
       })
     )
   }
@@ -176,7 +161,7 @@ export const MainView = () => {
               ) : (
                 <Col md={10}>
                   <ProfileView
-                    users={[user]}
+                    user={user}
                     token={token}
                     favoriteMovies={favoriteMovies}
                     onFavoritesUpdate={handleFavoritesUpdate}
@@ -204,7 +189,7 @@ export const MainView = () => {
                       xs={12}
                     >
                       <MovieCard
-                        users={user}
+                        user={user}
                         movie={movie}
                         token={token}
                         onFavoritesUpdate={handleFavoritesUpdate}
@@ -235,7 +220,7 @@ export const MainView = () => {
                       xs={12}
                     >
                       <MovieCard
-                        users={user}
+                        user={user}
                         movie={movie}
                         token={token}
                         onFavoritesUpdate={handleFavoritesUpdate}
