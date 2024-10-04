@@ -3,8 +3,9 @@ import PropTypes from "prop-types"
 import { Button, Card} from "react-bootstrap"
 import { Link } from "react-router-dom"
 
-export const MovieCard = ({ users, movie, token, onFavoritesUpdate }) => {
-  const [favorites, setFavorites] = useState(users.favorites || [])
+export const MovieCard = ({ user, movie, token, onFavoritesUpdate }) => {
+
+  const [favorites, setFavorites] = useState(user.FavoriteMovies || [])
 
   const handleAddToFavorites = async event => {
     event.preventDefault()
@@ -17,7 +18,7 @@ export const MovieCard = ({ users, movie, token, onFavoritesUpdate }) => {
 
     try {
       const response = await fetch(
-        `https://my-movie-app-ab91e4bb4611.herokuapp.com/users/${users.username}/movies/${movie.id}`,
+        `https://my-movie-app-ab91e4bb4611.herokuapp.com/users/${user.Username}/movies/${movie.id}`,
         {
           method: "POST",
           headers: {
@@ -57,7 +58,7 @@ export const MovieCard = ({ users, movie, token, onFavoritesUpdate }) => {
 
     try {
       const response = await fetch(
-        `https://my-movie-app-ab91e4bb4611.herokuapp.com/users/${users.username}/movies/${movie.id}`,
+        `https://my-movie-app-ab91e4bb4611.herokuapp.com/users/${user.Username}/movies/${movie.id}`,
         {
           method: "DELETE",
           headers: {
@@ -126,16 +127,16 @@ MovieCard.propTypes = {
     directorBio: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
   }).isRequired,
-  users: PropTypes.shape({
-    username: PropTypes.string.isRequired,
-    favorites: PropTypes.arrayOf(PropTypes.string).isRequired,
-    birthday: PropTypes.oneOfType([
+  user: PropTypes.shape({
+    Username: PropTypes.string.isRequired,
+    Favorites: PropTypes.arrayOf(PropTypes.string).isRequired,
+    Birthday: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number,
       PropTypes.instanceOf(Date),
     ]).isRequired,
-    password: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
+    Password: PropTypes.string.isRequired,
+    Email: PropTypes.string.isRequired,
   }).isRequired,
   token: PropTypes.string.isRequired,
   onFavoritesUpdate: PropTypes.func.isRequired,
